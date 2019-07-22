@@ -21,6 +21,15 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
     type = "S3"
   }
 
+  /**
+  1.    Pull backend project source
+  2.    Bundle and deploy backend source code to lambda & API gatway
+  3.    Export any necessary configuration to (private) S3 bucket
+          (if high security is required, you can use AWS Sectrets Manager)
+  4.    Pull Frontend Source
+  5.    Bundle and deploy frontend packages to S3
+  */
+
   stage {
     name = "Backend_Source"
     action {
@@ -29,7 +38,7 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
       owner = "ThirdParty"
       provider = "GitHub"
       version = "1"
-      output_artifacts = ["source_output"]
+      output_artifacts = ["frontend_source_output"]
 
       configuration = {
         Owner = "staneslevski"
@@ -47,12 +56,12 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
       category         = "Build"
       owner            = "AWS"
       provider         = "CodeBuild"
-      input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
+      input_artifacts  = ["frontend_source_output"]
+      output_artifacts = ["frontend_build_output"]
       version          = "1"
 
       configuration = {
-        ProjectName = "test"
+        ProjectName = "${aws_codebuild_project.Backend_Build_And_Deploy.name}"
       }
     }
   }
