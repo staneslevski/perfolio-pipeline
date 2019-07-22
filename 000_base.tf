@@ -12,18 +12,17 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-
-
 resource "aws_codepipeline" "perfolio-codepipeline" {
   name = "perfolio-pipeline"
   role_arn = "${aws_iam_role.perfolio_pipeline_role.arn}"
+
   artifact_store {
     location = "${aws_s3_bucket.perfolio-pipeline-bucket.bucket}"
     type = "S3"
   }
 
   stage {
-    name = "Backend Source"
+    name = "Backend_Source"
     action {
       name = "Source"
       category = "Source"
@@ -34,7 +33,7 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
 
       configuration = {
         Owner = "staneslevski"
-        Repo = "perfect-portfolio"
+        Repo = "perfolio-backend"
         Branch = "master"
       }
     }

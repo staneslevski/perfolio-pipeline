@@ -1,2 +1,5 @@
 .terraform
 .idea
+
+# binary for stack plans
+myNewStack
