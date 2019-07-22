@@ -12,10 +12,7 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-resource "aws_s3_bucket" "perfolio-pipeline-bucket" {
-  bucket = "perfolio-pipeline-bucket"
-  acl = "private"
-}
+
 
 resource "aws_codepipeline" "perfolio-codepipeline" {
   name = "perfolio-pipeline"
@@ -61,19 +58,3 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
     }
   }
 }
-
-//resource "aws_codebuild_project" "Backend_Build_And_Deploy" {
-//  name = "Backend_Build_And_Deploy"
-//  service_role = ""
-//  artifacts {
-//    type = ""
-//  }
-//  environment {
-//    compute_type = ""
-//    image = ""
-//    type = ""
-//  }
-//  source {
-//    type = ""
-//  }
-//}
