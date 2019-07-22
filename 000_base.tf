@@ -17,60 +17,6 @@ resource "aws_s3_bucket" "perfolio-pipeline-bucket" {
   acl = "private"
 }
 
-resource "aws_iam_role" "perfolio_pipeline_role" {
-  name = "perfolio-pipeline-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codepipeline.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy" "perfolio_pipeline_policy" {
-  name = "perfolio_pipeline_policy"
-  role = "${aws_iam_role.perfolio_pipeline_role.id}"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:GetBucketVersioning",
-        "s3:PutObject",
-        "s3:DeleteObject"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.perfolio-pipeline-bucket.arn}",
-        "${aws_s3_bucket.perfolio-pipeline-bucket.arn}/*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
-
 resource "aws_codepipeline" "perfolio-codepipeline" {
   name = "perfolio-pipeline"
   role_arn = "${aws_iam_role.perfolio_pipeline_role.arn}"
@@ -116,18 +62,18 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
   }
 }
 
-resource "aws_codebuild_project" "Backend_Build_And_Deploy" {
-  name = "Backend_Build_And_Deploy"
-  service_role = ""
-  artifacts {
-    type = ""
-  }
-  environment {
-    compute_type = ""
-    image = ""
-    type = ""
-  }
-  source {
-    type = ""
-  }
-}
+//resource "aws_codebuild_project" "Backend_Build_And_Deploy" {
+//  name = "Backend_Build_And_Deploy"
+//  service_role = ""
+//  artifacts {
+//    type = ""
+//  }
+//  environment {
+//    compute_type = ""
+//    image = ""
+//    type = ""
+//  }
+//  source {
+//    type = ""
+//  }
+//}
