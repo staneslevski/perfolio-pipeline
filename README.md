@@ -18,8 +18,8 @@ modules for your terraform.
 It is bad practice to use modules to split code along simplistic lines (see Terraform docs 
 [here](https://www.terraform.io/docs/modules/index.html#when-to-write-a-module 
 "Terraform Docs: When To Write A Module")
-) and so because I believe these files do not yet have sufficient levels of abstraction to 
-warrant creating re-usable modules, I have simply split them into different files. 
+) and so because the bulk of the project is just a pipeline, I have split the units into separate 
+files.
 
-
-[https://staneslevski.github.io/perfolio-pipeline/]: https://staneslevski.github.io/perfolio-pipeline/
+Because AWS CodeBuild build projects share a lot of the same configuration and there will be 
+multiple build steps in the project, I have a created a re-usable build project module.
