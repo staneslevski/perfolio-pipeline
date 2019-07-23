@@ -61,7 +61,7 @@ resource "aws_codepipeline" "perfolio-codepipeline" {
       version          = "1"
 
       configuration = {
-        ProjectName = "${aws_codebuild_project.Backend_Build_And_Deploy.name}"
+        ProjectName = "${module.backend_codebuild_project.project_name}"
       }
     }
   }

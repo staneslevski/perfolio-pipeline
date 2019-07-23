@@ -38,5 +38,14 @@ variable "build_timeout" {
 
 variable "artifact_type" {
   description = "string | either S3, CODEPIPELINE, or NO_ARTIFACTS"
-  default = "NO_ARTIFACTS"
+  default = "CODEPIPELINE"
+}
+
+variable "source_type" {
+  description = "string | either CODECOMMIT, CODEPIPELINE, GITHUB, GITHUB_ENTERPRISE, BITBUCKET, S3 or NO_SOURCE"
+  default = "CODEPIPELINE"
+}
+
+variable "pipeline_bucket_arn" {
+  description = "string | bucket arn for the pipeline bucket where source is kept"
 }

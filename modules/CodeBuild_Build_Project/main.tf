@@ -19,42 +19,44 @@ EOF
 
 data "aws_iam_policy_document" "permissions" {
   statement {
-    sid = ""
-
+    sid = "logs"
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:CompleteLayerUpload",
-      "ecr:GetAuthorizationToken",
-      "ecr:InitiateLayerUpload",
-      "ecr:PutImage",
-      "ecr:UploadLayerPart",
     ]
-
     effect = "Allow"
-
     resources = [
       "*",
     ]
   }
+  statement {
+    sid = "s3"
+    actions = [
+      "s3:*"
+    ]
+    effect = "Allow"
+    resources = [
+      var.pipeline_bucket_arn,
+      "${var.pipeline_bucket_arn}/*"
+    ]
+  }
 }
 
-resource "aws_iam_role_policy" "example" {
-  role = "${aws_iam_role.build_project_service_role.name}"
+resource "aws_iam_role_policy" "codebuild_service_role_policy" {
+  role = aws_iam_role.build_project_service_role.name
 
-  policy = "${data.aws_iam_policy_document.permissions}"
+  policy = data.aws_iam_policy_document.permissions.json
 }
 
-resource "aws_codebuild_project" "${var.project_name}" {
+resource "aws_codebuild_project" "module_project" {
   name          = var.project_name
   description   = var.project_description
   build_timeout = var.build_timeout
   service_role  = aws_iam_role.build_project_service_role.arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = var.artifact_type
   }
 
   cache {
@@ -77,6 +79,7 @@ resource "aws_codebuild_project" "${var.project_name}" {
   }
 
   source {
-    type            = "CODEPIPELINE"
+    type = var.source_type
+    buildspec = var.buildspec
   }
 }
