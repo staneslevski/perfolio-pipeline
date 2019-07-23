@@ -6,7 +6,8 @@ separate repo._
 
 
 READMEs are great, but check out the proper docs here: 
-[https://staneslevski.github.io/perfolio-pipeline/][https://staneslevski.github.io/perfolio-pipeline/]
+[https://staneslevski.github.io/perfolio-pipeline/]
+[https://staneslevski.github.io/perfolio-pipeline/]
 
 The project will use a base terraform template in the root directory and will then pull in 
 extra files in order to manage and organise all the modules of the project's infrastructure.
