@@ -60,14 +60,14 @@ resource "aws_codebuild_project" "module_project" {
   }
 
   cache {
-    type = "NO_CACHE"
+    type = var.cache_type
   }
 
   environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:1.0"
-    type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "CODEBUILD"
+    compute_type                = var.environment_compute_type
+    image                       = var.environment_compute_type
+    type                        = var.environment_type
+    image_pull_credentials_type = var.environment_image_pull_credentials_type
   }
 
   logs_config {

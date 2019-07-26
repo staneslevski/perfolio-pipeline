@@ -14,10 +14,6 @@ variable "build_image" {
   description = "Docker image for build environment, e.g. 'aws/codebuild/docker:1.12.1' or 'aws/codebuild/eb-nodejs-6.10.0-amazonlinux-64:4.0.0'. For more info: http://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref.html"
 }
 
-variable "build_compute_type" {
-  default = "BUILD_GENERAL1_SMALL"
-}
-
 variable "buildspec" {
   description = "string | Supply a project relative path to a buildspec file"
 }
@@ -48,4 +44,26 @@ variable "source_type" {
 
 variable "pipeline_bucket_arn" {
   description = "string | bucket arn for the pipeline bucket where source is kept"
+}
+
+variable "cache_type" {
+  description = "cache type"
+  default = "NOCACHE"
+}
+
+variable "environment_compute_type" {
+  description = "Build instance type"
+  default = "BUILD_GENERAL1_SMALL"
+}
+
+variable "environment_image" {
+  default = "aws/codebuild/standard:1.0"
+}
+
+variable "environment_type" {
+  default = "LINUX_CONTAINER"
+}
+
+variable "environment_image_pull_credentials_type" {
+  default = "CODEBUILD"
 }
